@@ -4,7 +4,7 @@ ENV NODE_ENV production
 
 WORKDIR /
 
-COPY backend .
+COPY . .
 
 RUN npm install
 
