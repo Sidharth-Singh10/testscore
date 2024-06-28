@@ -7,7 +7,7 @@ pipeline {
         DOCKER_TAG = "0.0.1.RELEASE"
     }
 
-
+    stages {
         stage('Build') {
             steps {
                 script {
@@ -37,9 +37,5 @@ pipeline {
                 }
             }
         }
-
-      
     }
-
-   
 }
