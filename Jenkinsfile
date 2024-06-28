@@ -13,9 +13,7 @@ pipeline {
             steps {
                 script {
                     // Build the backend Docker image
-                     if (!fileExists('backend')) {
-                        error("Backend directory not found")
-                    }
+                     
                     sh 'docker build -t $BACKEND_IMAGE:$DOCKER_TAG ./backend'
                 }
             }
