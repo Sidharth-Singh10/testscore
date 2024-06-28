@@ -7,13 +7,6 @@ pipeline {
         DOCKER_TAG = "0.0.1.RELEASE"
     }
 
-    stages {
-        stage('Checkout') {
-            steps {
-                // Checkout the code from GitHub
-                git scm
-            }
-        }
 
         stage('Build') {
             steps {
