@@ -16,7 +16,7 @@ pipeline {
                         script {
                             
                             // Build the backend Docker image
-                            sh 'docker build -t $BACKEND_IMAGE:$DOCKER_TAG ./backend'
+                            sh 'docker build -t $BACKEND_IMAGE:$DOCKER_TAG ./user_frontend'
                         }
                     }
                 }
