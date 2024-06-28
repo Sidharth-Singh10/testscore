@@ -1,6 +1,11 @@
 pipeline {
-    agent any
-
+      agent {
+        docker {
+            image 'docker'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
+        }
+    }
+    
     environment {
         // DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials-id')
         DOCKER_IMAGE = 'sidharthsingh7/ss_backend'
