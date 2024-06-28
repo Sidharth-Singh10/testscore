@@ -1,20 +1,38 @@
+# Define the Node.js version as a build argument
 ARG NODE_VERSION=22.2.0
 
-FROM node:${NODE_VERSION}-alpine
+# Use the official Node.js image as the base image
+FROM node:${NODE_VERSION}-alpine as build
 
-ENV NODE_ENV production
+# Set the working directory
+WORKDIR /app
 
-WORKDIR /
+# Copy package.json and package-lock.json
+COPY backend/package*.json ./
 
-COPY ./backend .
-
+# Install dependencies
 RUN npm install
 
+# Copy the rest of the application code
+COPY backend .
+
+# Build the TypeScript application
 RUN npx tsc -b
 
+# Create a new stage for the final production image
+FROM node:${NODE_VERSION}-alpine
+
+# Set the environment to production
+ENV NODE_ENV=production
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the built application from the previous stage
+COPY --from=build /app /app
+
+# Expose the application port
 EXPOSE 4000
 
-CMD node dist/index.js
-
-
-
+# Command to run the application
+CMD ["node", "dist/index.js"]
