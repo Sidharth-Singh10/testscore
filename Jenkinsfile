@@ -1,7 +1,8 @@
 pipeline {
-      agent any
+    agent any
+
     environment {
-        // DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials-id')
+        DOCKERHUB_CREDENTIALS = credentials('1fe75ff7-3325-4fbb-927d-788a3461e268')
         DOCKER_IMAGE = 'sidharthsingh7/ss_backend'
         DOCKER_TAG = "0.0.1.RELEASE"
     }
@@ -16,14 +17,13 @@ pipeline {
             }
         }
 
-      
-
         stage('Push to Docker Hub') {
             steps {
                 script {
-                    // Log in to Docker Hub
-                    // Push the Docker image to Docker Hub
-                    sh 'docker push $DOCKER_IMAGE:$DOCKER_TAG'
+                    docker.withRegistry('https://index.docker.io/v1/', '1fe75ff7-3325-4fbb-927d-788a3461e268') {
+                        def customImage = docker.image("$DOCKER_IMAGE:$DOCKER_TAG")
+                        customImage.push()
+                    }
                 }
             }
         }
