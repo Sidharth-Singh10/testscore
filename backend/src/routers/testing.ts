@@ -10,6 +10,15 @@ router.get("/testing", async (req, res) => {
 
 
 })
+router.get("/jenkins", async (req, res) => {
+
+  res.json({
+    user: "jenkinsTestCompleted"
+  })
+
+
+})
+
 
 
 export default router;
