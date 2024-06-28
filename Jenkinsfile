@@ -16,7 +16,7 @@ pipeline {
                         script {
                             
                             // Build the backend Docker image
-                            sh 'docker build -t $BACKEND_IMAGE:$DOCKER_TAG ./user_frontend'
+                            sh 'docker build -t $BACKEND_IMAGE:$DOCKER_TAG ./backend'
                         }
                     }
                 }
@@ -25,7 +25,7 @@ pipeline {
                         script {
                             
                             // Build the frontend Docker image
-                            sh 'docker build -t $FRONTEND_IMAGE:$DOCKER_TAG ./frontend'
+                            sh 'docker build -t $FRONTEND_IMAGE:$DOCKER_TAG ./user_frontend'
                         }
                     }
                 }
