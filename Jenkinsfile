@@ -22,7 +22,7 @@ pipeline {
             steps {
                 script {
                     // Build the frontend Docker image
-                    sh 'docker build -t $FRONTEND_IMAGE:$DOCKER_TAG ./frontend'
+                    sh 'docker build -t $FRONTEND_IMAGE:$DOCKER_TAG ./user_frontend'
                 }
             }
         }
