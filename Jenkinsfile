@@ -3,26 +3,47 @@ pipeline {
 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('1fe75ff7-3325-4fbb-927d-788a3461e268')
-        DOCKER_IMAGE = 'sidharthsingh7/ss_backend'
-        DOCKER_TAG = "0.0.1.RELEASE"
+        BACKEND_IMAGE = 'sidharthsingh7/ss_backend'
+        FRONTEND_IMAGE = 'sidharthsingh7/ss_frontend'
+        DOCKER_TAG = '0.0.1.RELEASE'
     }
 
     stages {
-        stage('Build') {
+        stage('Build Backend Image') {
             steps {
                 script {
-                    // Build the Docker image
-                    sh 'docker build -t $DOCKER_IMAGE:$DOCKER_TAG .'
+                    // Build the backend Docker image
+                    sh 'docker build -t $BACKEND_IMAGE:$DOCKER_TAG ./backend'
                 }
             }
         }
 
-        stage('Push to Docker Hub') {
+        stage('Build Frontend Image') {
+            steps {
+                script {
+                    // Build the frontend Docker image
+                    sh 'docker build -t $FRONTEND_IMAGE:$DOCKER_TAG ./frontend'
+                }
+            }
+        }
+
+        stage('Push Backend Image') {
             steps {
                 script {
                     docker.withRegistry('https://index.docker.io/v1/', '1fe75ff7-3325-4fbb-927d-788a3461e268') {
-                        def customImage = docker.image("$DOCKER_IMAGE:$DOCKER_TAG")
-                        customImage.push()
+                        def backendImage = docker.image("$BACKEND_IMAGE:$DOCKER_TAG")
+                        backendImage.push()
+                    }
+                }
+            }
+        }
+
+        stage('Push Frontend Image') {
+            steps {
+                script {
+                    docker.withRegistry('https://index.docker.io/v1/', '1fe75ff7-3325-4fbb-927d-788a3461e268') {
+                        def frontendImage = docker.image("$FRONTEND_IMAGE:$DOCKER_TAG")
+                        frontendImage.push()
                     }
                 }
             }
